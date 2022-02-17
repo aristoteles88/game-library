@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GameLibrary</string>
+    <string name="add_platform_string">Adicione uma Plataforma</string>
 </resources>

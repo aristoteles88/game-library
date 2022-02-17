@@ -1,4 +1,4 @@
-package com.example.gamelibrary
+package com.aristotelesjunior.gamelibrary
 
 import org.junit.Test
 

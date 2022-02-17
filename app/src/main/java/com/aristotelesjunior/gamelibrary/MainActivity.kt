@@ -1,4 +1,4 @@
-package com.example.gamelibrary
+package com.aristotelesjunior.gamelibrary
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
