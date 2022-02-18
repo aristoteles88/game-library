@@ -1,13 +1,13 @@
-package com.aristotelesjunior.gamelibrary.ui.dashboard
+package com.aristotelesjunior.gamelibrary.ui.wishlist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class DashboardViewModel : ViewModel() {
+class WishlistViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+        value = "This is wishlist Fragment"
     }
     val text: LiveData<String> = _text
 }

@@ -17,7 +17,8 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        val view = binding.root
+        setContentView(view)
 
         val navView: BottomNavigationView = binding.navView
 
@@ -26,7 +27,7 @@ class HomeActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_library, R.id.navigation_wishlist, R.id.navigation_profile
+                R.id.navigation_library, R.id.navigation_wishlist, R.id.navigation_profile,
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
