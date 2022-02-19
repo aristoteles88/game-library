@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
+import com.aristotelesjunior.gamelibrary.database.Platform
 import com.aristotelesjunior.gamelibrary.databinding.FragmentLibraryBinding
 
 class LibraryFragment : Fragment() {
@@ -22,16 +24,19 @@ class LibraryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val libraryViewModel =
-            ViewModelProvider(this).get(LibraryViewModel::class.java)
+//        val libraryViewModel =
+//            ViewModelProvider(this).get(LibraryViewModel::class.java)
 
         _binding = FragmentLibraryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textLibrary
-        libraryViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        val dataSet : Array<Platform> =
+        val platformAdapter = PlataformAdapter(dataSet = )
+        val rvLibrary: RecyclerView = binding.rvLibrary
+//        libraryViewModel.re.observe(viewLifecycleOwner) {
+//            textView.text = it
+//        }
+
         return root
     }
 

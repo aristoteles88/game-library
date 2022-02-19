@@ -1,13 +1,39 @@
 package com.aristotelesjunior.gamelibrary.ui.library
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.aristotelesjunior.gamelibrary.database.Platform
 
 class LibraryViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is library Fragment"
+    private var _platformLiveData = MutableLiveData<Array<Platform>>()
+    private val _platformArray = Array<Platform>()
+
+    fun LibraryViewModel() {
+        this._platformLiveData = MutableLiveData<Array<Platform>>()
+
+        // call your Rest API in init method
+        init()
     }
-    val text: LiveData<String> = _text
+    fun getLibraryMutableLiveData(): MutableLiveData<Array<Platform>> {
+        return this._platformLiveData
+    }
+
+    fun init() {
+        populateList()
+        userLiveData.setValue(userArrayList)
+    }
+
+    fun populateList() {
+        val platform = Platform()
+        platform.name =
+        user.setDescription("Best rating movie")
+        userArrayList = ArrayList()
+        userArrayList.add(user)
+        userArrayList.add(user)
+        userArrayList.add(user)
+        userArrayList.add(user)
+        userArrayList.add(user)
+        userArrayList.add(user)
+    }
 }
