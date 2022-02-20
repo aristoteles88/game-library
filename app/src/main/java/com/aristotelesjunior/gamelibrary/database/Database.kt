@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
 @Database(entities = [Platform::class, Game::class], version = 1)
-@TypeConverters(DataConverter::class)
+//@TypeConverters(DataConverter::class)
 abstract class GamesDatabase : RoomDatabase() {
     abstract fun platformDao() : PlatformDao
     abstract fun gameDao() : GameDao
@@ -19,5 +19,5 @@ object GameDB {
             context,
             GamesDatabase::class.java,
             "games-database"
-        ).build()
+        ).allowMainThreadQueries().build()
 }

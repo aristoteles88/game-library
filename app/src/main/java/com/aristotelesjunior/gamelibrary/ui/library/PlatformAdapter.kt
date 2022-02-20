@@ -1,5 +1,6 @@
 package com.aristotelesjunior.gamelibrary.ui.library
 
+import android.graphics.drawable.Icon
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aristotelesjunior.gamelibrary.R
 import com.aristotelesjunior.gamelibrary.database.Platform
 
-class PlataformAdapter(private val dataSet: Array<Platform>) :
+class PlataformAdapter(private val dataSet: MutableList<Platform>) :
     RecyclerView.Adapter<PlataformAdapter.ViewHolder>() {
 
     /**
@@ -17,7 +18,7 @@ class PlataformAdapter(private val dataSet: Array<Platform>) :
      * (custom ViewHolder).
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val ivPlatform : ImageView = view.findViewById(R.id.ivPlatform)
+        var ivPlatform : ImageView = view.findViewById(R.id.ivPlatform)
         val tvPlatformName : TextView = view.findViewById(R.id.tvPlatformName)
 
 //        init {
@@ -27,7 +28,7 @@ class PlataformAdapter(private val dataSet: Array<Platform>) :
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        // Create a new view, which defines the UI of the list item
+        // Create a new view, which defines the UI of the list item}
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.platform_row, viewGroup, false)
 
@@ -39,7 +40,7 @@ class PlataformAdapter(private val dataSet: Array<Platform>) :
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-//        viewHolder.ivPlatform = dataSet[position]
+        viewHolder.ivPlatform.setImageResource(dataSet[position].image)
         viewHolder.tvPlatformName.text = dataSet[position].name
     }
 
