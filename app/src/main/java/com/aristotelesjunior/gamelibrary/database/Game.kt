@@ -17,7 +17,7 @@ data class Game (
     @ColumnInfo(name = "name") val name : String,
     @ColumnInfo(name = "releaseDate") val releaseDate : String,
     @ColumnInfo(name = "description") val description : String,
-    @ColumnInfo(name = "genre") val genre : List<String>,
+    @ColumnInfo(name = "genre") val genre : String,
     @ColumnInfo(name = "score") val score : Int,
     @ColumnInfo(name = "finished") val finished : Boolean,
     @ColumnInfo(name = "platform") val platform : String,

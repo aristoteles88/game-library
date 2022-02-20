@@ -1,8 +1,18 @@
 <resources>
     <string name="app_name">GameLibrary</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_main">MainActivity</string>
     <string name="title_library">Biblioteca</string>
     <string name="title_wishlist">Desejados</string>
     <string name="title_profile">Perfil</string>
     <string name="title_add">Adicionar</string>
+    <string name="button_add">Adicionar</string>
+    <string name="activity_add_platform">AddPlatformActivity</string>
+    <string name="title_add_platform">Adicionar Plataforma</string>
+    <string name="button_take_photo">Tirar Foto</string>
+    <string name="button_open_gallery">Abrir Galeria</string>
+    <string name="button_add_platform">Botão Adicionar Plataforma</string>
+    <string name="image_add_platform">Adicionar Foto Da Plataforma</string>
+    <string name="insert_platform_name">Insira o nome da plataforma (obrigatório)</string>
+    <string name="insert_release_date">Insira o ano de lançamento (opcional)</string>
+    <string name="insert_platform_image">Insira uma foto da plataforma</string>
 </resources>
