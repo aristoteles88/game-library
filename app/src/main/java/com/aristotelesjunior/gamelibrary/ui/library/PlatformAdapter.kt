@@ -8,9 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.aristotelesjunior.gamelibrary.R
+import com.aristotelesjunior.gamelibrary.database.DataConverter
 import com.aristotelesjunior.gamelibrary.database.Platform
 
-class PlataformAdapter(private val dataSet: MutableList<Platform>) :
+class PlataformAdapter(private val dataSet: List<Platform>) :
     RecyclerView.Adapter<PlataformAdapter.ViewHolder>() {
 
     /**
@@ -20,6 +21,7 @@ class PlataformAdapter(private val dataSet: MutableList<Platform>) :
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var ivPlatform : ImageView = view.findViewById(R.id.ivPlatform)
         val tvPlatformName : TextView = view.findViewById(R.id.tvPlatformName)
+        val tvGamesAmount : TextView = view.findViewById(R.id.tvGamesAmount)
 
 //        init {
 //            // Define click listener for the ViewHolder's View.
@@ -40,8 +42,10 @@ class PlataformAdapter(private val dataSet: MutableList<Platform>) :
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.ivPlatform.setImageResource(dataSet[position].image)
+        viewHolder.ivPlatform.setImageBitmap(DataConverter.DbBitmapUtility.getImage(dataSet[position].image))
+//        setImageResource(dataSet[position].image)
         viewHolder.tvPlatformName.text = dataSet[position].name
+        viewHolder.tvGamesAmount.text = if (dataSet[position].gamesAmount != -1) dataSet[position].gamesAmount.toString() + " jogos" else ""
     }
 
     // Return the size of your dataset (invoked by the layout manager)

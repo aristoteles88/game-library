@@ -11,6 +11,8 @@
     <string name="button_take_photo">Tirar Foto</string>
     <string name="button_open_gallery">Abrir Galeria</string>
     <string name="button_add_platform">Botão Adicionar Plataforma</string>
+    <string name="button_cancel_description">Botão Cancelar</string>
+    <string name="button_cancel">Cancelar</string>
     <string name="image_add_platform">Adicionar Foto Da Plataforma</string>
     <string name="insert_platform_name">Insira o nome da plataforma (obrigatório)</string>
     <string name="insert_release_date">Insira o ano de lançamento (opcional)</string>

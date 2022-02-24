@@ -1,98 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.add.platform.AddPlatformActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvTitle"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        tools:context=".ui.add.platform.AddPlatformActivity">
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="@string/title_add_platform"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/etPlatformName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:ems="10"
+            android:hint="@string/insert_platform_name"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            android:textColorHint="#757575"
+            app:layout_constraintEnd_toEndOf="@id/tvTitle"
+            app:layout_constraintStart_toStartOf="@id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            android:autofillHints="" />
+
+        <EditText
+            android:id="@+id/etReleaseDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:hint="@string/insert_release_date"
+            android:inputType="number"
+            android:minHeight="48dp"
+            android:textColorHint="#757575"
+            app:layout_constraintEnd_toEndOf="@id/tvTitle"
+            app:layout_constraintStart_toStartOf="@id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@id/etPlatformName"
+            android:autofillHints="" />
+
+        <ImageView
+            android:id="@+id/ivAddPlatform"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_margin="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:adjustViewBounds="false"
+            android:background="@drawable/imageview_background"
+            android:contentDescription="@string/image_add_platform"
+            android:minHeight="250dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etReleaseDate" />
+
+        <Button
+            android:id="@+id/btnTakePicture"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/button_take_photo"
+            android:backgroundTint="@color/purple_700"
+            android:text="@string/button_take_photo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnOpenGallery"
+            app:layout_constraintTop_toBottomOf="@id/ivAddPlatform"/>
+
+        <Button
+            android:id="@+id/btnOpenGallery"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/button_open_gallery"
+            android:backgroundTint="@color/purple_700"
+            android:text="@string/button_open_gallery"
+            app:layout_constraintTop_toBottomOf="@id/ivAddPlatform"
+            app:layout_constraintStart_toEndOf="@id/btnTakePicture"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <Button
+            android:id="@+id/btnAddPlatform"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/button_add_platform"
+            android:text="@string/title_add_platform"
+            app:layout_constraintTop_toBottomOf="@id/btnTakePicture"/>
+
+        <Button
+        android:id="@+id/btnCancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:fontFamily="sans-serif-black"
-        android:gravity="center"
-        android:text="@string/title_add_platform"
-        android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/etPlatformName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:ems="10"
-        android:hint="@string/insert_platform_name"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:textColorHint="#757575"
-        app:layout_constraintEnd_toEndOf="@id/tvTitle"
-        app:layout_constraintStart_toStartOf="@id/tvTitle"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
-        android:autofillHints="" />
-
-    <EditText
-        android:id="@+id/etReleaseDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="@string/insert_release_date"
-        android:inputType="number"
-        android:minHeight="48dp"
-        android:textColorHint="#757575"
-        app:layout_constraintEnd_toEndOf="@id/tvTitle"
-        app:layout_constraintStart_toStartOf="@id/tvTitle"
-        app:layout_constraintTop_toBottomOf="@id/etPlatformName"
-        android:autofillHints="" />
-
-    <ImageView
-        android:id="@+id/ivAddPlatform"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:adjustViewBounds="false"
-        android:background="@drawable/imageview_background"
-        android:contentDescription="@string/image_add_platform"
-        android:minHeight="250dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etReleaseDate" />
-
-    <Button
-        android:id="@+id/btnTakePicture"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:contentDescription="@string/button_take_photo"
-        android:backgroundTint="@color/purple_700"
-        android:text="@string/button_take_photo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnOpenGallery"
-        app:layout_constraintTop_toBottomOf="@id/ivAddPlatform"/>
-
-    <Button
-        android:id="@+id/btnOpenGallery"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:contentDescription="@string/button_open_gallery"
-        android:backgroundTint="@color/purple_700"
-        android:text="@string/button_open_gallery"
-        app:layout_constraintTop_toBottomOf="@id/ivAddPlatform"
-        app:layout_constraintStart_toEndOf="@id/btnTakePicture"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <Button
-        android:id="@+id/btnAddPlatform"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:contentDescription="@string/button_add_platform"
-        android:text="@string/title_add_platform"
-        app:layout_constraintTop_toBottomOf="@id/btnTakePicture"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:backgroundTint="@color/red"
+        android:contentDescription="@string/button_cancel_description"
+        android:isScrollContainer="false"
+        android:nestedScrollingEnabled="false"
+        android:overScrollMode="always"
+        android:text="@string/button_cancel"
+        app:layout_constraintTop_toBottomOf="@id/btnAddPlatform"
+        tools:layout_editor_absoluteX="16dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
