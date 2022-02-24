@@ -1,8 +1,14 @@
-package com.aristotelesjunior.gamelibrary.database
+package com.aristotelesjunior.gamelibrary.models
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.aristotelesjunior.gamelibrary.R
+import com.aristotelesjunior.gamelibrary.database.DataConverter
+import com.aristotelesjunior.gamelibrary.database.GameDB
 
 @Entity
 data class Platform(

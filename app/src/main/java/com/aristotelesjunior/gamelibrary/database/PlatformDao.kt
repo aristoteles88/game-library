@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import androidx.room.Delete
+import com.aristotelesjunior.gamelibrary.models.Platform
 
 @Dao
 interface PlatformDao {

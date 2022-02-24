@@ -3,9 +3,7 @@ package com.aristotelesjunior.gamelibrary.ui.add.platform
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
@@ -18,10 +16,9 @@ import androidx.core.content.FileProvider
 import com.aristotelesjunior.gamelibrary.R
 import com.aristotelesjunior.gamelibrary.database.DataConverter
 import com.aristotelesjunior.gamelibrary.database.GameDB
-import com.aristotelesjunior.gamelibrary.database.Platform
+import com.aristotelesjunior.gamelibrary.models.Platform
 import java.io.File
 import java.io.IOException
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 

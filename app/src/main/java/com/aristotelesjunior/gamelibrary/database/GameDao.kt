@@ -5,12 +5,13 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import androidx.room.Delete
+import com.aristotelesjunior.gamelibrary.models.Game
 
 @Dao
 interface GameDao {
 
-    @Query("SELECT * FROM game")
-    fun getGames() : List<Game>
+    @Query("SELECT * FROM game WHERE platform = :platformId")
+    fun getGamesFromPlatform(platformId: Int) : List<Game>
 
     @Insert
     fun insertGame(game: Game)

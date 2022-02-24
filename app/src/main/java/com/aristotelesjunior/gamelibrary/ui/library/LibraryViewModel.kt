@@ -2,8 +2,7 @@ package com.aristotelesjunior.gamelibrary.ui.library
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.aristotelesjunior.gamelibrary.database.GameDB
-import com.aristotelesjunior.gamelibrary.database.Platform
+import com.aristotelesjunior.gamelibrary.models.Platform
 
 class LibraryViewModel : ViewModel() {
 

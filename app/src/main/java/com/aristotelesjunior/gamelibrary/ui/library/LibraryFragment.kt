@@ -14,8 +14,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aristotelesjunior.gamelibrary.R
 import com.aristotelesjunior.gamelibrary.database.DataConverter
 import com.aristotelesjunior.gamelibrary.database.GameDB
-import com.aristotelesjunior.gamelibrary.database.Platform
+import com.aristotelesjunior.gamelibrary.models.Platform
+import com.aristotelesjunior.gamelibrary.ui.library.PlataformRecyclerViewAdapter
 import com.aristotelesjunior.gamelibrary.databinding.FragmentLibraryBinding
+import com.aristotelesjunior.gamelibrary.models.Game
+import com.aristotelesjunior.gamelibrary.ui.gameslibrary.MyGamesLibraryRecyclerViewAdapter
 
 
 class LibraryFragment : Fragment() {
@@ -27,7 +30,8 @@ class LibraryFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var rvLibrary: RecyclerView
-    private lateinit var platformAdapter: PlataformAdapter
+    private lateinit var platformRecyclerViewAdapter: PlataformRecyclerViewAdapter
+    private lateinit var gameRecyclerViewAdapter: MyGamesLibraryRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,15 +42,37 @@ class LibraryFragment : Fragment() {
         _binding = FragmentLibraryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        populatePlatformRecyclerView()
+        val rvData = fetchPlatformFromDB(requireContext())
+
+        platformRecyclerViewAdapter = PlataformRecyclerViewAdapter(dataSet = rvData, PlataformRecyclerViewAdapter.OnClickListener {platform  -> clickPlatform(platform)} )
+        rvLibrary = binding.rvLibrary
+        rvLibrary.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = platformRecyclerViewAdapter
+            addItemDecoration(
+                DividerItemDecoration(rvLibrary.context,
+                DividerItemDecoration.VERTICAL)
+            )
+        }
+
 
         return root
     }
 
     override fun onResume() {
         super.onResume()
-        populatePlatformRecyclerView()
+        val rvData = fetchPlatformFromDB(requireContext())
 
+        platformRecyclerViewAdapter = PlataformRecyclerViewAdapter(dataSet = rvData, PlataformRecyclerViewAdapter.OnClickListener {platform  -> clickPlatform(platform)} )
+        rvLibrary = binding.rvLibrary
+        rvLibrary.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = platformRecyclerViewAdapter
+            addItemDecoration(
+                DividerItemDecoration(rvLibrary.context,
+                    DividerItemDecoration.VERTICAL)
+            )
+        }
     }
 
     override fun onDestroyView() {
@@ -54,8 +80,14 @@ class LibraryFragment : Fragment() {
         _binding = null
     }
 
-    private fun addNoPlatformRow() : List<Platform> {
-        val bitmapImage: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.pngwing_com)
+    private fun clickPlatform(platform: Platform) {
+        val rvData = fetchGamesFromDB(requireContext(), platform.id)
+        gameRecyclerViewAdapter = MyGamesLibraryRecyclerViewAdapter(rvData)
+        rvLibrary.adapter = gameRecyclerViewAdapter
+    }
+
+    private fun addNoPlatformItem(context: Context) : List<Platform> {
+        val bitmapImage: Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.pngwing_com)
 
         val noPlatform = Platform(
             id = 0,
@@ -67,17 +99,36 @@ class LibraryFragment : Fragment() {
         return listOf(noPlatform)
     }
 
-    private fun populatePlatformRecyclerView() {
-        val platformDBList = GameDB.getInstance(requireActivity().applicationContext).platformDao().getPlatforms()
-        val platformList = platformDBList.ifEmpty { addNoPlatformRow() }
+    private fun fetchPlatformFromDB(context: Context) : List<Platform> {
+        return GameDB.getInstance(context)
+            .platformDao()
+            .getPlatforms()
+            .ifEmpty { addNoPlatformItem(context) }
+    }
 
-        platformAdapter = PlataformAdapter(dataSet = platformList)
-        rvLibrary = binding.rvLibrary
-        rvLibrary.apply {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = platformAdapter
-            addItemDecoration(DividerItemDecoration(rvLibrary.context,
-                DividerItemDecoration.VERTICAL))
-        }
+    private fun addNoGameItem(context: Context) : List<Game> {
+        val bitmapImage: Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.pngwing_com)
+
+        val noGame = Game(
+            id = 0,
+            name = "Não há jogos cadastrados",
+            releaseDate = "",
+            description = "",
+            genre = "",
+            rating = -1,
+            started = false,
+            finished = false,
+            wishlist = false,
+            platform = "",
+            image = DataConverter.DbBitmapUtility.getBytes(bitmapImage),
+        )
+        return listOf(noGame)
+    }
+
+    private fun fetchGamesFromDB(context: Context, platformId: Int) : List<Game>{
+        return GameDB.getInstance(context)
+            .gameDao()
+            .getGamesFromPlatform(platformId)
+            .ifEmpty { addNoGameItem(context) }
     }
 }
