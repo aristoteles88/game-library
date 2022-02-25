@@ -1,4 +1,4 @@
-package com.aristotelesjunior.gamelibrary.ui.add.platform
+package com.aristotelesjunior.gamelibrary.ui.add.game
 
 import android.app.Activity
 import android.content.Intent
@@ -22,7 +22,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddPlatformActivity : AppCompatActivity() {
+class AddGameActivity : AppCompatActivity() {
 
     //Our variables
     private var ivAddPlatform: ImageView? = null

@@ -1,16 +1,11 @@
-package com.aristotelesjunior.gamelibrary.ui.gameslibrary
+package com.aristotelesjunior.gamelibrary.ui.library
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.aristotelesjunior.gamelibrary.R
 import com.aristotelesjunior.gamelibrary.database.DataConverter
-import com.aristotelesjunior.gamelibrary.database.GameDB
 import com.aristotelesjunior.gamelibrary.databinding.GameItemBinding
 import com.aristotelesjunior.gamelibrary.models.Game
 

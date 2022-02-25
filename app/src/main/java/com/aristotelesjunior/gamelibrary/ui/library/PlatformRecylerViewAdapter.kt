@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -37,7 +38,8 @@ class PlataformRecyclerViewAdapter(private val dataSet: List<Platform>, private 
         platformViewHolder.ivPlatform.setImageBitmap(DataConverter.DbBitmapUtility.getImage(platform.image))
         platformViewHolder.tvPlatformName.text = platform.name
         platformViewHolder.tvGamesAmount.text = if (platform.gamesAmount != -1) platform.gamesAmount.toString() + " jogos" else ""
-        platformViewHolder.itemView.setOnClickListener {
+        if (platform.gamesAmount == -1) platformViewHolder.imBtnArrow.setImageResource(0)
+        if (platform.gamesAmount != -1) platformViewHolder.itemView.setOnClickListener {
             onClickListener.onClick(platform)
         }
     }
@@ -48,6 +50,7 @@ class PlataformRecyclerViewAdapter(private val dataSet: List<Platform>, private 
         var ivPlatform : ImageView = binding.ivPlatform
         val tvPlatformName : TextView = binding.tvPlatformName
         val tvGamesAmount : TextView = binding.tvGamesAmount
+        val imBtnArrow : ImageButton = binding.imBtnArrow
 
 //        override fun toString(): String {
 //            return super.toString() + " '" + contentView.text + "'"

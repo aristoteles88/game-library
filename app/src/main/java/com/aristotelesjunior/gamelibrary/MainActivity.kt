@@ -26,12 +26,6 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val imbtnAddNewItem = findViewById<ImageButton>(R.id.imBtnAdd)
-        imbtnAddNewItem.setOnClickListener {
-            val addItemIntent = Intent(this, AddPlatformActivity::class.java)
-            startActivity(addItemIntent)
-        }
-
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_home)
