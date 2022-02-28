@@ -124,7 +124,7 @@ class LibraryFragment : Fragment() {
             description = "",
             genre = "",
             rating = -1,
-            started = false,
+            gameStatus = false,
             finished = false,
             wishlist = false,
             platform = "",

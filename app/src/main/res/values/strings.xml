@@ -25,7 +25,13 @@
     <string name="image_add_game">Adicionar Foto Do Jogo</string>
     <string name="insert_game_name">Insira o nome do jogo</string>
     <string name="insert_game_genre">Gênero</string>
-    <string name="insert_game_release_date">Ano YYYY</string>
+    <string name="insert_game_release_date">Ano (YYYY)</string>
     <string name="insert_game_rating">Avaliação</string>
+    <string name="textview_game_status">Qual o status do jogo</string>
+    <string name="game_status_on_queue">Na fila</string>
+    <string name="game_status_started">Iniciado</string>
+    <string name="game_status_finished">Finalizado</string>
+    <string name="add_to_wishlist">Adicionar à lista de desejos</string>
+    <string name="textview_add_cover">Adicionar imagem da capa</string>
     <string name="insert_game_image">Insira uma foto do jogo</string>
 </resources>

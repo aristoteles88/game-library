@@ -81,53 +81,97 @@
             app:layout_constraintTop_toTopOf="@id/etGameGenre"
             android:autofillHints="" />
 
+        <TextView
+            android:id="@+id/tvGameStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            app:layout_constraintTop_toBottomOf="@id/etGameGenre"
+            app:layout_constraintStart_toStartOf="@id/etGameGenre"
+            android:text="@string/textview_game_status"/>
+        <RadioGroup
+            android:id="@+id/rgGameStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvGameStatus"
+            app:layout_constraintStart_toStartOf="@id/tvGameStatus">
+            <RadioButton
+                android:id="@+id/rbOnQueue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/game_status_on_queue"/>
+
+            <RadioButton
+                android:id="@+id/rbStarted"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/game_status_started"/>
+
+            <RadioButton
+                android:id="@+id/rbFinished"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/game_status_finished"/>
+        </RadioGroup>
+        <CheckBox
+            android:id="@+id/cbAddToWishlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/tvGameStatus"
+            app:layout_constraintEnd_toEndOf="@id/etGameRating"
+            android:text="@string/add_to_wishlist"
+            />
+        <TextView
+            android:id="@+id/tvAddCover"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            app:layout_constraintTop_toBottomOf="@id/rgGameStatus"
+            app:layout_constraintStart_toStartOf="@id/etGameGenre"
+            android:text="@string/textview_add_cover"/>
+
         <ImageView
-            android:id="@+id/ivAddPlatform"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_margin="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:id="@+id/ivGameCover"
+            android:layout_width="50dp"
+            android:layout_height="80dp"
+            android:layout_marginVertical="8dp"
             android:adjustViewBounds="false"
             android:background="@drawable/imageview_background"
             android:contentDescription="@string/image_add_platform"
-            android:minHeight="250dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etGameReleaseDate" />
+            app:layout_constraintEnd_toStartOf="@id/tvCoverFilename"
+            app:layout_constraintStart_toStartOf="@id/tvAddCover"
+            app:layout_constraintTop_toBottomOf="@id/tvAddCover" />
 
-        <Button
-            android:id="@+id/btnTakePicture"
+        <TextView
+            android:id="@+id/tvCoverFilename"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:contentDescription="@string/button_take_photo"
-            android:backgroundTint="@color/purple_700"
-            android:text="@string/button_take_photo"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btnOpenGallery"
-            app:layout_constraintTop_toBottomOf="@id/ivAddPlatform"/>
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintStart_toEndOf="@id/ivGameCover"
+            app:layout_constraintEnd_toStartOf="@id/ibAddCover"
+            app:layout_constraintBottom_toBottomOf="@id/ivGameCover"
+            android:hint="Foto da capa do jogo"
+            android:textSize="16sp"/>
 
-        <Button
-            android:id="@+id/btnOpenGallery"
-            android:layout_width="0dp"
+        <ImageButton
+            android:id="@+id/ibAddCover"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:contentDescription="@string/button_open_gallery"
-            android:backgroundTint="@color/purple_700"
-            android:text="@string/button_open_gallery"
-            app:layout_constraintTop_toBottomOf="@id/ivAddPlatform"
-            app:layout_constraintStart_toEndOf="@id/btnTakePicture"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintStart_toEndOf="@id/tvCoverFilename"
+            app:layout_constraintEnd_toEndOf="@id/etGameRating"
+            app:layout_constraintBottom_toBottomOf="@id/ivGameCover"
+            android:src="@drawable/ic_baseline_add_24"
+            android:backgroundTint="@color/purple_500"
+            app:tint="@color/white"/>
 
         <Button
-            android:id="@+id/btnAddPlatform"
+            android:id="@+id/btnAddGame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:contentDescription="@string/button_add_platform"
-            android:text="@string/title_add_platform"
-            app:layout_constraintTop_toBottomOf="@id/btnTakePicture"/>
+            android:contentDescription="@string/button_add_game"
+            android:text="@string/title_add_game"
+            app:layout_constraintTop_toBottomOf="@id/tvCoverFilename"/>
 
         <Button
         android:id="@+id/btnCancel"
@@ -140,7 +184,7 @@
         android:nestedScrollingEnabled="false"
         android:overScrollMode="always"
         android:text="@string/button_cancel"
-        app:layout_constraintTop_toBottomOf="@id/btnAddPlatform"
+        app:layout_constraintTop_toBottomOf="@id/btnAddGame"
         tools:layout_editor_absoluteX="16dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
