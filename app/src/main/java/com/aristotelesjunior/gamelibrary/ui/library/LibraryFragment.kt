@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,7 +31,8 @@ class LibraryFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var fabAdd :FloatingActionButton
+    private lateinit var fabAdd : FloatingActionButton
+    private lateinit var tvLibraryTitle : TextView
 
     private lateinit var rvLibrary: RecyclerView
     private lateinit var platformRecyclerViewAdapter: PlataformRecyclerViewAdapter
@@ -49,6 +51,7 @@ class LibraryFragment : Fragment() {
         val root: View = binding.root
 
         fabAdd = binding.fabAdd
+        tvLibraryTitle = binding.tvLibraryTitle
 
         loadsPlatformData()
 
@@ -66,9 +69,10 @@ class LibraryFragment : Fragment() {
     }
 
     private fun loadsPlatformData(){
+        tvLibraryTitle.text = "Plataformas"
         val rvData = fetchPlatformFromDB(requireContext())
 
-        platformRecyclerViewAdapter = PlataformRecyclerViewAdapter(dataSet = rvData, PlataformRecyclerViewAdapter.OnClickListener {platform  -> clickPlatform(platform)} )
+        platformRecyclerViewAdapter = PlataformRecyclerViewAdapter(dataSet = rvData, PlataformRecyclerViewAdapter.OnClickListener {platform  -> loadGameData(platform)} )
         rvLibrary = binding.rvLibrary
         rvLibrary.apply {
             layoutManager = LinearLayoutManager(activity)
@@ -84,7 +88,8 @@ class LibraryFragment : Fragment() {
         }
     }
 
-    private fun clickPlatform(platform: Platform) {
+    private fun loadGameData(platform: Platform) {
+        tvLibraryTitle.text = "Jogos"
         val platformId = platform.id
         val platformName = platform.name
         val rvData = fetchGamesFromDB(requireContext(), platform.id)
