@@ -3,7 +3,6 @@ package com.aristotelesjunior.gamelibrary.ui.add.game
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -11,8 +10,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
@@ -20,8 +17,8 @@ import com.aristotelesjunior.gamelibrary.R
 import com.aristotelesjunior.gamelibrary.database.DataConverter
 import com.aristotelesjunior.gamelibrary.database.GameDB
 import com.aristotelesjunior.gamelibrary.databinding.ActivityAddGameBinding
-import com.aristotelesjunior.gamelibrary.databinding.ActivityMainBinding
 import com.aristotelesjunior.gamelibrary.models.Game
+import com.aristotelesjunior.gamelibrary.models.Platform
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -32,6 +29,7 @@ class AddGameActivity : AppCompatActivity() {
 
     //Our variables
     private var ivAddGame: ImageView? = null
+    private var tvCoverFilename: TextView? = null
     private var pictureURI: Uri? = null
     private lateinit var binding: ActivityAddGameBinding
     private var PLATFORM_ID: Int = 0
@@ -63,6 +61,7 @@ class AddGameActivity : AppCompatActivity() {
         val cbAddToWishlist = findViewById<CheckBox>(R.id.cbAddToWishlist)
         val etMultilineDescription = findViewById<EditText>(R.id.etMultiLineDescription)
         ivAddGame = findViewById(R.id.ivGameCover)
+        tvCoverFilename = findViewById(R.id.tvCoverFilename)
         val ibAddCover = findViewById<ImageButton>(R.id.ibAddCover)
         val btnAddGame = findViewById<Button>(R.id.btnAddGame)
         val btnCancel = findViewById<Button>(R.id.btnCancel)
@@ -85,16 +84,25 @@ class AddGameActivity : AppCompatActivity() {
                 val newGame = Game(
                     id = 0,
                     name = etGameName.text.toString(),
-                    releaseDate = etGameReleaseDate.text.toString(),
-                    description = etMultilineDescription.text.toString(),
-                    genre = etGameGenre.text.toString(),
-                    rating = etGameRating.text.toString().toInt(),
+                    releaseDate = if (etGameReleaseDate.text.toString().isNotEmpty()) etGameReleaseDate.text.toString() else "YYYY",
+                    description = if (etMultilineDescription.text.toString().isNotEmpty()) etMultilineDescription.text.toString() else "",
+                    genre = if (etGameGenre.text.toString().isNotEmpty()) etGameGenre.text.toString() else "",
+                    rating = if (etGameRating.text.toString().isNotEmpty()) etGameRating.text.toString().toInt() else 0,
                     gameStatus = findViewById<RadioButton>(checkedGameStatus).text.toString(),
                     wishlist = cbAddToWishlist.isChecked,
                     platform = PLATFORM_ID,
                     image = gameCover
                 )
                 GameDB.getInstance(this).gameDao().insertGame(newGame)
+                val platform = GameDB.getInstance(this).platformDao().getPlatformByID(platformId = PLATFORM_ID)
+                val updatedPlatform = Platform(
+                    id = platform.id,
+                    name = platform.name,
+                    releaseDate = platform.releaseDate,
+                    gamesAmount = GameDB.getInstance(this).gameDao().getGamesFromPlatform(platform.id).size,
+                    image = platform.image
+                )
+                GameDB.getInstance(this).platformDao().updatePlatform(platform = updatedPlatform)
             }
             finish()
         }
@@ -104,8 +112,26 @@ class AddGameActivity : AppCompatActivity() {
         }
     }
 
-    private fun show(message: String) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
+    private fun takePhoto() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        val photoFile: File? = createImageFile()
+        pictureURI = FileProvider.getUriForFile(
+            this,
+            "com.aristotelesjunior.gamelibrary.fileprovider",
+            photoFile!!
+        )
+        takePictureIntent.resolveActivity(packageManager)
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, pictureURI)
+        startActivityForResult(takePictureIntent, OPERATION_CAPTURE_PHOTO)
+    }
+
+    private fun chooseFromGallery(){
+        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI). also {
+            getPictureFromGalleryIntent -> getPictureFromGalleryIntent.resolveActivity(packageManager)?.also {
+                getPictureFromGalleryIntent.type = "image/*"
+                startActivityForResult(getPictureFromGalleryIntent, OPERATION_CHOOSE_PHOTO)
+            }
+        }
     }
 
     lateinit var currentPhotoPath: String
@@ -137,6 +163,7 @@ class AddGameActivity : AppCompatActivity() {
                     ivAddGame!!.setImageURI(pictureURI)
                 }
         }
+        tvCoverFilename!!.text = pictureURI.toString()
     }
 
     private fun chooseImage(context: Context) {
@@ -149,26 +176,10 @@ class AddGameActivity : AppCompatActivity() {
         builder.setItems(optionsMenu) { dialogInterface, i ->
             when {
                 optionsMenu[i] == "Tirar Foto" -> {
-                    val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                    val photoFile: File? = createImageFile()
-                    pictureURI = FileProvider.getUriForFile(
-                        this,
-                        "com.aristotelesjunior.gamelibrary.fileprovider",
-                        photoFile!!
-                    )
-                    takePictureIntent.resolveActivity(packageManager)
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, pictureURI)
-                    Log.d("teste", OPERATION_CAPTURE_PHOTO.toString())
-                    startActivityForResult(takePictureIntent, OPERATION_CAPTURE_PHOTO)
+                    takePhoto()
                 }
                 optionsMenu[i] == "Escolher da Galeria" -> {
-                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI). also {
-                        getPictureFromGalleryIntent -> getPictureFromGalleryIntent.resolveActivity(packageManager)?.also {
-                            getPictureFromGalleryIntent.type = "image/*"
-                            Log.d("teste", OPERATION_CHOOSE_PHOTO.toString())
-                            startActivityForResult(getPictureFromGalleryIntent, OPERATION_CHOOSE_PHOTO)
-                        }
-                    }
+                    chooseFromGallery()
                 }
                 optionsMenu[i] == "Sair" -> {
                     dialogInterface.dismiss()

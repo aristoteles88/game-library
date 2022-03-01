@@ -13,6 +13,12 @@ interface PlatformDao {
     @Query("SELECT * FROM platform")
     fun getPlatforms() : List<Platform>
 
+    @Query("SELECT * FROM platform WHERE platform.name = :platformName")
+    fun getPlatformByName(platformName: String) : List<Platform>
+
+    @Query("SELECT * FROM platform WHERE platform.id = :platformId")
+    fun getPlatformByID(platformId: Int) : Platform
+
     @Insert
     fun insertPlatform(platform: Platform)
 

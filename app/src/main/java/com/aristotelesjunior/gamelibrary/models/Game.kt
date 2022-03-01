@@ -18,7 +18,7 @@ import com.aristotelesjunior.gamelibrary.database.GameDB
         onDelete = ForeignKey.CASCADE,
     )])
 data class Game (
-    @PrimaryKey val id : Int,
+    @PrimaryKey(autoGenerate = true) val id : Int,
     @ColumnInfo(name = "name") val name : String,
     @ColumnInfo(name = "releaseDate") val releaseDate : String,
     @ColumnInfo(name = "description") val description : String,

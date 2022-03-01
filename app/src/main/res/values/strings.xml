@@ -24,7 +24,7 @@
     <string name="button_add_game">Adicionar Jogo</string>
     <string name="button_add_game_description">Botão Adicionar Jogo</string>
     <string name="image_add_game">Adicionar Foto Do Jogo</string>
-    <string name="insert_game_name">Insira o nome do jogo</string>
+    <string name="insert_game_name">Insira o nome do jogo (obrigatório)</string>
     <string name="insert_game_genre">Gênero</string>
     <string name="insert_game_release_date">Ano (YYYY)</string>
     <string name="insert_game_rating">Avaliação</string>
