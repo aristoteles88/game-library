@@ -10,7 +10,7 @@
         android:layout_height="0dp"
         tools:context=".ui.add.platform.AddPlatformActivity">
         <TextView
-            android:id="@+id/tvAddGameTitle"
+            android:id="@+id/tvAddPlatform"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/etGameName"
+            android:id="@+id/etPlatformName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -32,13 +32,13 @@
             android:inputType="textPersonName"
             android:minHeight="48dp"
             android:textColorHint="#757575"
-            app:layout_constraintEnd_toEndOf="@id/tvAddGameTitle"
-            app:layout_constraintStart_toStartOf="@id/tvAddGameTitle"
-            app:layout_constraintTop_toBottomOf="@id/tvAddGameTitle"
+            app:layout_constraintEnd_toEndOf="@id/tvAddPlatform"
+            app:layout_constraintStart_toStartOf="@id/tvAddPlatform"
+            app:layout_constraintTop_toBottomOf="@id/tvAddPlatform"
             android:autofillHints="" />
 
         <EditText
-            android:id="@+id/etGameReleaseDate"
+            android:id="@+id/etPlatformReleaseDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -46,9 +46,9 @@
             android:inputType="number"
             android:minHeight="48dp"
             android:textColorHint="#757575"
-            app:layout_constraintEnd_toEndOf="@id/tvAddGameTitle"
-            app:layout_constraintStart_toStartOf="@id/tvAddGameTitle"
-            app:layout_constraintTop_toBottomOf="@id/etGameName"
+            app:layout_constraintEnd_toEndOf="@id/tvAddPlatform"
+            app:layout_constraintStart_toStartOf="@id/etPlatformName"
+            app:layout_constraintTop_toBottomOf="@id/etPlatformName"
             android:autofillHints="" />
 
         <ImageView
@@ -64,7 +64,7 @@
             android:minHeight="250dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etGameReleaseDate" />
+            app:layout_constraintTop_toBottomOf="@id/etPlatformReleaseDate" />
 
         <Button
             android:id="@+id/btnTakePicture"

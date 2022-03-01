@@ -1,32 +1,41 @@
 package com.aristotelesjunior.gamelibrary.ui.add.game
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.util.Log
+import android.view.View
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.aristotelesjunior.gamelibrary.R
 import com.aristotelesjunior.gamelibrary.database.DataConverter
 import com.aristotelesjunior.gamelibrary.database.GameDB
-import com.aristotelesjunior.gamelibrary.models.Platform
+import com.aristotelesjunior.gamelibrary.databinding.ActivityAddGameBinding
+import com.aristotelesjunior.gamelibrary.databinding.ActivityMainBinding
+import com.aristotelesjunior.gamelibrary.models.Game
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class AddGameActivity : AppCompatActivity() {
 
     //Our variables
-    private var ivAddPlatform: ImageView? = null
+    private var ivAddGame: ImageView? = null
     private var pictureURI: Uri? = null
+    private lateinit var binding: ActivityAddGameBinding
+    private var PLATFORM_ID: Int = 0
+    private var PLATFORM_NAME: String = ""
 
     //Our constants
     private val OPERATION_CAPTURE_PHOTO = 1
@@ -34,35 +43,58 @@ class AddGameActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_platform)
 
-        val etPlatformName = findViewById<EditText>(R.id.etGameName)
-        val etReleaseDate = findViewById<EditText>(R.id.etGameReleaseDate)
-        ivAddPlatform = findViewById(R.id.ivAddPlatform)
-        val btnTakePicture = findViewById<Button>(R.id.btnTakePicture)
-        val btnOpenGallery = findViewById<Button>(R.id.btnOpenGallery)
-        val btnAddPlatform = findViewById<Button>(R.id.btnAddPlatform)
+        binding = ActivityAddGameBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(R.layout.activity_add_game)
+
+        val tvAddGameActivity = findViewById<TextView>(R.id.tvAddGameTitle)
+
+        PLATFORM_ID = intent.extras!!["PLATFORM_ID"] as Int
+        PLATFORM_NAME = intent.extras!!["PLATFORM_NAME"].toString()
+
+        tvAddGameActivity.text = getString(R.string.title_add_game, PLATFORM_NAME)
+
+        val etGameName = findViewById<EditText>(R.id.etGameName)
+        val etGameGenre = findViewById<EditText>(R.id.etGameGenre)
+        val etGameReleaseDate = findViewById<EditText>(R.id.etGameReleaseDate)
+        val etGameRating = findViewById<EditText>(R.id.etGameRating)
+        val rgGameStatus = findViewById<RadioGroup>(R.id.rgGameStatus)
+        val cbAddToWishlist = findViewById<CheckBox>(R.id.cbAddToWishlist)
+        val etMultilineDescription = findViewById<EditText>(R.id.etMultiLineDescription)
+        ivAddGame = findViewById(R.id.ivGameCover)
+        val ibAddCover = findViewById<ImageButton>(R.id.ibAddCover)
+        val btnAddGame = findViewById<Button>(R.id.btnAddGame)
         val btnCancel = findViewById<Button>(R.id.btnCancel)
 
-        btnTakePicture.setOnClickListener {
-            capturePhoto()
+
+        ibAddCover.setOnClickListener {
+            chooseImage(view.context)
         }
 
-        btnOpenGallery.setOnClickListener {
-            openGallery()
-        }
-
-        btnAddPlatform.setOnClickListener {
-            val bitmapImage: Bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, pictureURI!!)
-            if (etPlatformName.text.toString().isNotEmpty() && DataConverter.DbBitmapUtility.getBytes(bitmapImage).isNotEmpty()) {
-                val newPlatform = Platform(
+        btnAddGame.setOnClickListener {
+            val gameCover: ByteArray = if (pictureURI != null) {
+                val bitmapGameCover: Bitmap =
+                    MediaStore.Images.Media.getBitmap(this.contentResolver, pictureURI!!)
+                DataConverter.DbBitmapUtility.getBytes(bitmapGameCover)
+            } else {
+                DataConverter.DbBitmapUtility.getBytes(BitmapFactory.decodeResource(resources, R.drawable.pngwing_com))
+            }
+            if (etGameName.text.toString().isNotEmpty()) {
+                val checkedGameStatus = rgGameStatus.checkedRadioButtonId
+                val newGame = Game(
                     id = 0,
-                    name = etPlatformName.text.toString(),
-                    releaseDate = etReleaseDate.text.toString(),
-                    gamesAmount = 0,
-                    image = DataConverter.DbBitmapUtility.getBytes(bitmapImage)
+                    name = etGameName.text.toString(),
+                    releaseDate = etGameReleaseDate.text.toString(),
+                    description = etMultilineDescription.text.toString(),
+                    genre = etGameGenre.text.toString(),
+                    rating = etGameRating.text.toString().toInt(),
+                    gameStatus = findViewById<RadioButton>(checkedGameStatus).text.toString(),
+                    wishlist = cbAddToWishlist.isChecked,
+                    platform = PLATFORM_ID,
+                    image = gameCover
                 )
-                GameDB.getInstance(this).platformDao().insertPlatform(newPlatform)
+                GameDB.getInstance(this).gameDao().insertGame(newGame)
             }
             finish()
         }
@@ -92,40 +124,57 @@ class AddGameActivity : AppCompatActivity() {
         }
     }
 
-    private fun capturePhoto(){
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        val photoFile: File? = createImageFile()
-        pictureURI = FileProvider.getUriForFile(
-            this,
-            "com.aristotelesjunior.gamelibrary.fileprovider",
-            photoFile!!
-        )
-        takePictureIntent.resolveActivity(packageManager)
-        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, pictureURI)
-        startActivityForResult(takePictureIntent, OPERATION_CAPTURE_PHOTO)
-    }
-
-    private fun openGallery(){
-        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI). also {
-            getPictureFromGalleryIntent -> getPictureFromGalleryIntent.resolveActivity(packageManager)?.also {
-                getPictureFromGalleryIntent.type = "image/*"
-                startActivityForResult(getPictureFromGalleryIntent, OPERATION_CHOOSE_PHOTO)
-            }
-        }
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when(requestCode){
             OPERATION_CAPTURE_PHOTO ->
                 if (resultCode == Activity.RESULT_OK) {
-                    ivAddPlatform!!.setImageURI(pictureURI)
+                    ivAddGame!!.setImageURI(pictureURI)
                 }
             OPERATION_CHOOSE_PHOTO ->
                 if (resultCode == Activity.RESULT_OK) {
                     pictureURI = data!!.data
-                    ivAddPlatform!!.setImageURI(pictureURI)
+                    ivAddGame!!.setImageURI(pictureURI)
                 }
         }
+    }
+
+    private fun chooseImage(context: Context) {
+        val optionsMenu = arrayOf<CharSequence>(
+            "Tirar Foto",
+            "Escolher da Galeria",
+            "Sair"
+        )
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        builder.setItems(optionsMenu) { dialogInterface, i ->
+            when {
+                optionsMenu[i] == "Tirar Foto" -> {
+                    val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                    val photoFile: File? = createImageFile()
+                    pictureURI = FileProvider.getUriForFile(
+                        this,
+                        "com.aristotelesjunior.gamelibrary.fileprovider",
+                        photoFile!!
+                    )
+                    takePictureIntent.resolveActivity(packageManager)
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, pictureURI)
+                    Log.d("teste", OPERATION_CAPTURE_PHOTO.toString())
+                    startActivityForResult(takePictureIntent, OPERATION_CAPTURE_PHOTO)
+                }
+                optionsMenu[i] == "Escolher da Galeria" -> {
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI). also {
+                        getPictureFromGalleryIntent -> getPictureFromGalleryIntent.resolveActivity(packageManager)?.also {
+                            getPictureFromGalleryIntent.type = "image/*"
+                            Log.d("teste", OPERATION_CHOOSE_PHOTO.toString())
+                            startActivityForResult(getPictureFromGalleryIntent, OPERATION_CHOOSE_PHOTO)
+                        }
+                    }
+                }
+                optionsMenu[i] == "Sair" -> {
+                    dialogInterface.dismiss()
+                }
+            }
+        }
+        builder.show()
     }
 }

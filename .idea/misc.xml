@@ -3,29 +3,30 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projetos/game-library/app/src/main/res/layout/activity_add_game.xml" value="0.4114583333333333" />
+        <entry key="..\:/Projetos/game-library/app/src/main/res/layout/activity_add_platform.xml" value="0.4114583333333333" />
+        <entry key="..\:/Projetos/game-library/app/src/main/res/layout/activity_main.xml" value="0.3211050724637681" />
         <entry key="..\:/Projetos/game-library/app/src/main/res/layout/fragment_library.xml" value="0.3211050724637681" />
+        <entry key="..\:/Projetos/game-library/app/src/main/res/layout/game_item.xml" value="0.4114583333333333" />
+        <entry key="..\:/Projetos/game-library/app/src/main/res/layout/game_item_list.xml" value="0.4114583333333333" />
         <entry key="..\:/Projetos/game-library/app/src/main/res/layout/platform_component.xml" value="0.3211050724637681" />
-        <entry key="app/src/main/res/drawable/imageview_background.xml" value="0.133" />
-        <entry key="app/src/main/res/layout/activity_add_game.xml" value="0.375" />
-        <entry key="app/src/main/res/layout/activity_add_platform.xml" value="0.2634730538922156" />
-        <entry key="app/src/main/res/layout/activity_home.xml" value="0.1" />
+        <entry key="..\:/Projetos/game-library/app/src/main/res/layout/platform_row.xml" value="0.3211050724637681" />
+        <entry key="..\:/Projetos/game-library/app/src/main/res/menu/bottom_nav_menu.xml" value="0.4119791666666667" />
+        <entry key="..\:/Projetos/game-library/app/src/main/res/xml/file_paths.xml" value="0.3211050724637681" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.30932971014492755" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_add.xml" value="0.30932971014492755" />
-        <entry key="app/src/main/res/layout/fragment_add_plataform.xml" value="0.13269927536231885" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.30932971014492755" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.30932971014492755" />
-        <entry key="app/src/main/res/layout/fragment_library.xml" value="0.1887031408308004" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.10106382978723404" />
         <entry key="app/src/main/res/layout/fragment_wishlist.xml" value="0.10106382978723404" />
-        <entry key="app/src/main/res/layout/platform_item.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/platform_row.xml" value="0.1887031408308004" />
         <entry key="app/src/main/res/menu/bottom_app_bar.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.2078125" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_16_PREVIEW" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

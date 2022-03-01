@@ -26,7 +26,7 @@ data class Game (
     @ColumnInfo(name = "rating") val rating : Int,
     @ColumnInfo(name = "gameStatus") val gameStatus : String,
     @ColumnInfo(name = "wishlist") val wishlist : Boolean,
-    @ColumnInfo(name = "platform") val platform : String,
+    @ColumnInfo(name = "platform") val platform : Int,
     @ColumnInfo(name = "cover", typeAffinity = ColumnInfo.BLOB) val image : ByteArray,
 //    @ColumnInfo(name = "screenshots", typeAffinity = ColumnInfo.BLOB) val screenshots : List<ByteArray>,
 )

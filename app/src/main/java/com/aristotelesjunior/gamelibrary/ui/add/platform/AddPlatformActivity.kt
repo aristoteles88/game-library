@@ -3,6 +3,7 @@ package com.aristotelesjunior.gamelibrary.ui.add.platform
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -36,8 +37,8 @@ class AddPlatformActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_platform)
 
-        val etPlatformName = findViewById<EditText>(R.id.etGameName)
-        val etReleaseDate = findViewById<EditText>(R.id.etGameReleaseDate)
+        val etPlatformName = findViewById<EditText>(R.id.etPlatformName)
+        val etReleaseDate = findViewById<EditText>(R.id.etPlatformReleaseDate)
         ivAddPlatform = findViewById(R.id.ivAddPlatform)
         val btnTakePicture = findViewById<Button>(R.id.btnTakePicture)
         val btnOpenGallery = findViewById<Button>(R.id.btnOpenGallery)
@@ -53,14 +54,24 @@ class AddPlatformActivity : AppCompatActivity() {
         }
 
         btnAddPlatform.setOnClickListener {
-            val bitmapImage: Bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, pictureURI!!)
-            if (etPlatformName.text.toString().isNotEmpty() && DataConverter.DbBitmapUtility.getBytes(bitmapImage).isNotEmpty()) {
+            val imagePlatform: ByteArray = if (pictureURI != null) {
+                val bitmapImagePlatform: Bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, pictureURI!!)
+                DataConverter.DbBitmapUtility.getBytes(bitmapImagePlatform)
+            } else {
+                DataConverter.DbBitmapUtility.getBytes(
+                    BitmapFactory.decodeResource(
+                        resources,
+                        R.drawable.pngwing_com
+                    )
+                )
+            }
+            if (etPlatformName.text.toString().isNotEmpty()) {
                 val newPlatform = Platform(
                     id = 0,
                     name = etPlatformName.text.toString(),
                     releaseDate = etReleaseDate.text.toString(),
                     gamesAmount = 0,
-                    image = DataConverter.DbBitmapUtility.getBytes(bitmapImage)
+                    image = imagePlatform
                 )
                 GameDB.getInstance(this).platformDao().insertPlatform(newPlatform)
             }

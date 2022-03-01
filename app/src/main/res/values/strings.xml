@@ -20,8 +20,9 @@
     <string name="insert_platform_image">Insira uma foto da plataforma</string>
 
     <string name="activity_add_game">AddGameActivity</string>
-    <string name="title_add_game">Adicionar Jogo</string>
-    <string name="button_add_game">Botão Adicionar Jogo</string>
+    <string name="title_add_game">Adicionar Jogo de\n%1$s</string>
+    <string name="button_add_game">Adicionar Jogo</string>
+    <string name="button_add_game_description">Botão Adicionar Jogo</string>
     <string name="image_add_game">Adicionar Foto Do Jogo</string>
     <string name="insert_game_name">Insira o nome do jogo</string>
     <string name="insert_game_genre">Gênero</string>
@@ -32,6 +33,7 @@
     <string name="game_status_started">Iniciado</string>
     <string name="game_status_finished">Finalizado</string>
     <string name="add_to_wishlist">Adicionar à lista de desejos</string>
+    <string name="textview_game_description">Descrição do jogo</string>
     <string name="textview_add_cover">Adicionar imagem da capa</string>
     <string name="insert_game_image">Insira uma foto do jogo</string>
 </resources>

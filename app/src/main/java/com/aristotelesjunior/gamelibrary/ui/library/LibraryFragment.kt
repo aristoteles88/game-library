@@ -18,6 +18,7 @@ import com.aristotelesjunior.gamelibrary.database.GameDB
 import com.aristotelesjunior.gamelibrary.models.Platform
 import com.aristotelesjunior.gamelibrary.databinding.FragmentLibraryBinding
 import com.aristotelesjunior.gamelibrary.models.Game
+import com.aristotelesjunior.gamelibrary.ui.add.game.AddGameActivity
 import com.aristotelesjunior.gamelibrary.ui.add.platform.AddPlatformActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -35,6 +36,9 @@ class LibraryFragment : Fragment() {
     private lateinit var platformRecyclerViewAdapter: PlataformRecyclerViewAdapter
     private lateinit var gameRecyclerViewAdapter: MyGamesLibraryRecyclerViewAdapter
 
+    val PLATFORM_ID = "PLATFORM_ID"
+    val PLATFORM_NAME = "PLATFORM_NAME"
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,29 +50,22 @@ class LibraryFragment : Fragment() {
 
         fabAdd = binding.fabAdd
 
-        val rvData = fetchPlatformFromDB(requireContext())
-
-        platformRecyclerViewAdapter = PlataformRecyclerViewAdapter(dataSet = rvData, PlataformRecyclerViewAdapter.OnClickListener {platform  -> clickPlatform(platform)} )
-        rvLibrary = binding.rvLibrary
-        rvLibrary.apply {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = platformRecyclerViewAdapter
-            addItemDecoration(
-                DividerItemDecoration(rvLibrary.context,
-                DividerItemDecoration.VERTICAL)
-            )
-        }
-        fabAdd.setOnClickListener {
-            val addItemIntent = Intent(context, AddPlatformActivity::class.java)
-            startActivity(addItemIntent)
-        }
-
+        loadsPlatformData()
 
         return root
     }
 
     override fun onResume() {
         super.onResume()
+        loadsPlatformData()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun loadsPlatformData(){
         val rvData = fetchPlatformFromDB(requireContext())
 
         platformRecyclerViewAdapter = PlataformRecyclerViewAdapter(dataSet = rvData, PlataformRecyclerViewAdapter.OnClickListener {platform  -> clickPlatform(platform)} )
@@ -81,17 +78,25 @@ class LibraryFragment : Fragment() {
                     DividerItemDecoration.VERTICAL)
             )
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        fabAdd.setOnClickListener {
+            val addItemIntent = Intent(context, AddPlatformActivity::class.java)
+            startActivity(addItemIntent)
+        }
     }
 
     private fun clickPlatform(platform: Platform) {
+        val platformId = platform.id
+        val platformName = platform.name
         val rvData = fetchGamesFromDB(requireContext(), platform.id)
         gameRecyclerViewAdapter = MyGamesLibraryRecyclerViewAdapter(rvData)
         rvLibrary.adapter = gameRecyclerViewAdapter
+        fabAdd.setOnClickListener {
+            val addItemIntent = Intent(context, AddGameActivity::class.java).apply {
+                putExtra(PLATFORM_ID, platformId)
+                putExtra(PLATFORM_NAME,platformName)
+            }
+            startActivity(addItemIntent)
+        }
     }
 
     private fun addNoPlatformItem(context: Context) : List<Platform> {
@@ -114,7 +119,7 @@ class LibraryFragment : Fragment() {
             .ifEmpty { addNoPlatformItem(context) }
     }
 
-    private fun addNoGameItem(context: Context) : List<Game> {
+    private fun addNoGameItem(context: Context, platformId: Int) : List<Game> {
         val bitmapImage: Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.pngwing_com)
 
         val noGame = Game(
@@ -124,10 +129,9 @@ class LibraryFragment : Fragment() {
             description = "",
             genre = "",
             rating = -1,
-            gameStatus = false,
-            finished = false,
+            gameStatus = "notStarted",
             wishlist = false,
-            platform = "",
+            platform = platformId,
             image = DataConverter.DbBitmapUtility.getBytes(bitmapImage),
         )
         return listOf(noGame)
@@ -137,6 +141,6 @@ class LibraryFragment : Fragment() {
         return GameDB.getInstance(context)
             .gameDao()
             .getGamesFromPlatform(platformId)
-            .ifEmpty { addNoGameItem(context) }
+            .ifEmpty { addNoGameItem(context, platformId) }
     }
 }

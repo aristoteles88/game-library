@@ -89,29 +89,32 @@
             app:layout_constraintTop_toBottomOf="@id/etGameGenre"
             app:layout_constraintStart_toStartOf="@id/etGameGenre"
             android:text="@string/textview_game_status"/>
+
         <RadioGroup
             android:id="@+id/rgGameStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tvGameStatus"
-            app:layout_constraintStart_toStartOf="@id/tvGameStatus">
+            android:checkedButton="@id/rbOnQueue"
+            app:layout_constraintStart_toStartOf="@id/tvGameStatus"
+            app:layout_constraintTop_toBottomOf="@id/tvGameStatus">
+
             <RadioButton
                 android:id="@+id/rbOnQueue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/game_status_on_queue"/>
+                android:text="@string/game_status_on_queue" />
 
             <RadioButton
                 android:id="@+id/rbStarted"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/game_status_started"/>
+                android:text="@string/game_status_started" />
 
             <RadioButton
                 android:id="@+id/rbFinished"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/game_status_finished"/>
+                android:text="@string/game_status_finished" />
         </RadioGroup>
         <CheckBox
             android:id="@+id/cbAddToWishlist"
@@ -121,12 +124,33 @@
             app:layout_constraintEnd_toEndOf="@id/etGameRating"
             android:text="@string/add_to_wishlist"
             />
+
+        <TextView
+            android:id="@+id/tvGameDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            app:layout_constraintTop_toBottomOf="@id/rgGameStatus"
+            app:layout_constraintStart_toStartOf="@id/tvGameStatus"
+            android:text="@string/textview_game_description"/>
+
+        <EditText
+            android:id="@+id/etMultiLineDescription"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:hint="Adicione uma descrição do jogo"
+            app:layout_constraintTop_toBottomOf="@id/tvGameDescription"/>
+
         <TextView
             android:id="@+id/tvAddCover"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="16dp"
-            app:layout_constraintTop_toBottomOf="@id/rgGameStatus"
+            app:layout_constraintTop_toBottomOf="@id/etMultiLineDescription"
             app:layout_constraintStart_toStartOf="@id/etGameGenre"
             android:text="@string/textview_add_cover"/>
 
@@ -142,7 +166,7 @@
             app:layout_constraintStart_toStartOf="@id/tvAddCover"
             app:layout_constraintTop_toBottomOf="@id/tvAddCover" />
 
-        <TextView
+        <EditText
             android:id="@+id/tvCoverFilename"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -151,7 +175,8 @@
             app:layout_constraintEnd_toStartOf="@id/ibAddCover"
             app:layout_constraintBottom_toBottomOf="@id/ivGameCover"
             android:hint="Foto da capa do jogo"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:inputType="none"/>
 
         <ImageButton
             android:id="@+id/ibAddCover"
@@ -169,8 +194,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:contentDescription="@string/button_add_game"
-            android:text="@string/title_add_game"
+            android:contentDescription="@string/button_add_game_description"
+            android:text="@string/button_add_game"
             app:layout_constraintTop_toBottomOf="@id/tvCoverFilename"/>
 
         <Button
